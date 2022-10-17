@@ -1,5 +1,8 @@
 package br.gaius.models;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 public class Workstation {
 
 	private String id;
@@ -18,29 +21,20 @@ public class Workstation {
 
     public void setId(String id) {
         if(!idIsValid(id)) {
-            throw new IllegalArgumentException("O id informado nãos egue o padrão de id para Workstaiton.");            
+            throw new IllegalArgumentException("O id informado não segue o padrão de id para Workstaiton.");            
         }
         
         this.id = id;
     }
     
     private static boolean idIsValid(String id) {
-      //verifica se o id possui 4 caarcteres
-        if(id.length() != 4) {
+        Pattern idPattern = Pattern.compile("^[A-Z]\\d{3}$");
+        Matcher idMatcher = idPattern.matcher(id);
+        
+        if(idMatcher.matches()) {
+            return true;
+        }else {
             return false;
         }
-        
-        //verifica se o primeiro é letra
-        for(int i = 0; i <= 3; i++) {
-            if( i == 0 && !Character.isLetter(id.charAt(i))) {
-                return false;
-            }
-            
-            if(i != 0 && !Character.isDigit(id.charAt(i))) {
-                return false;
-            }
-        }
-        
-        return true;
     }
 }
