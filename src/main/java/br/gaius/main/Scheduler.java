@@ -13,6 +13,9 @@ public class Scheduler {
     }
     
     public boolean  makeReservation(Reservation reservation) {
+        //verifica se o local está ocupado no intervalo pretendido
+        //verifica se o usuário já possui outras reservas para o intervalo pretendido
+        
         return false;
     }
     
@@ -23,4 +26,5 @@ public class Scheduler {
     public List<Reservation> getReservationList(){
         return reservations;
     }
+    
 }
