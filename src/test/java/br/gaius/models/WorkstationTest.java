@@ -28,7 +28,7 @@ class WorkstationTest {
     }
     
     @Test
-    void should_ThrowException__When_LengthIsLessThan4() {
+    void should_ThrowException_When_LengthIsLessThan4() {
         //given
         String invalidId = "A10";
         
@@ -37,6 +37,20 @@ class WorkstationTest {
         
         //them
         assertThrows(IllegalArgumentException.class, executable);
+    }
+    
+    @Test
+    void should_ReturnTrue_When_LengthIsEquals4() {
+        //given
+        String expected = "A200";
+        String actual;
+
+        //when
+        workstation.setId(expected);
+        actual = workstation.getId();
+        
+        //them
+        assertEquals(expected, actual);
     }
 
 }
