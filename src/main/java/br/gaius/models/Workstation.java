@@ -5,7 +5,11 @@ public class Workstation {
 	private String id;
 
 	public Workstation(String id) {
-		this.id = id;
+	    if(!idIsValid(id)) {
+            throw new IllegalArgumentException("O id informado nãos egue o padrão de id para Workstaiton.");            
+        }
+        
+        this.id = id;
 	}
 
     public String getId() {
@@ -13,22 +17,30 @@ public class Workstation {
     }
 
     public void setId(String id) {
-        //verifica se o id possui 4 caarcteres
+        if(!idIsValid(id)) {
+            throw new IllegalArgumentException("O id informado nãos egue o padrão de id para Workstaiton.");            
+        }
+        
+        this.id = id;
+    }
+    
+    private static boolean idIsValid(String id) {
+      //verifica se o id possui 4 caarcteres
         if(id.length() != 4) {
-            throw new IllegalArgumentException("O id deve conter 4 caracteres.");
+            return false;
         }
         
         //verifica se o primeiro é letra
         for(int i = 0; i <= 3; i++) {
             if( i == 0 && !Character.isLetter(id.charAt(i))) {
-                throw new IllegalArgumentException("o primeiro dígito deve ser uma letra.");
+                return false;
             }
             
             if(i != 0 && !Character.isDigit(id.charAt(i))) {
-                throw new IllegalArgumentException(String.format("O caractere na posição %d deveria ser um dígito", i));
+                return false;
             }
         }
         
-        this.id = id;
+        return true;
     }
 }
