@@ -1,10 +1,12 @@
 package br.gaius.models;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class WorkstationTest {
 
@@ -15,42 +17,30 @@ class WorkstationTest {
         workstation = new Workstation("A100");
     }
     
-    @Test
-    void should_ThrowException_When_LengthIsGreaterThan4() {
+    @ParameterizedTest
+    @ValueSource(strings = {"A101", "B202", "C195", "W171", "J999"})
+    void should_ReturnTrue_When_IdMatches(String newId) {
         //given
-        String invalidId = "A1000";
-        
-        //when
-        Executable executable = () -> workstation.setId(invalidId);
-        
-        //them
-        assertThrows(IllegalArgumentException.class, executable);
-    }
-    
-    @Test
-    void should_ThrowException_When_LengthIsLessThan4() {
-        //given
-        String invalidId = "A10";
-        
-        //when
-        Executable executable = () -> workstation.setId(invalidId);
-        
-        //them
-        assertThrows(IllegalArgumentException.class, executable);
-    }
-    
-    @Test
-    void should_ReturnTrue_When_LengthIsEquals4() {
-        //given
-        String expected = "A200";
+        String expected = newId;
         String actual;
-
+        
         //when
-        workstation.setId(expected);
+        workstation.setId(newId);
         actual = workstation.getId();
         
-        //them
+        //then
         assertEquals(expected, actual);
     }
-
+    
+    @ParameterizedTest
+    @ValueSource(strings = {"AA01", "B2A2", "C19A", "W17100", "00J999", "C", "123"})
+    void should_ThrowException_When_IdDoesNotMatches(String newId) {
+        //given
+        
+        //when
+        Executable executable = () -> workstation.setId(newId);
+        
+        //then
+        assertThrows(IllegalArgumentException.class, executable);
+    }
 }
