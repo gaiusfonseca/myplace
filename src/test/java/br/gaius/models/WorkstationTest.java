@@ -16,9 +16,21 @@ class WorkstationTest {
     }
     
     @Test
-    void should_ReturnFalse_When_LengthIsGreaterThan4() {
+    void should_ThrowException_When_LengthIsGreaterThan4() {
         //given
         String invalidId = "A1000";
+        
+        //when
+        Executable executable = () -> workstation.setId(invalidId);
+        
+        //them
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+    
+    @Test
+    void should_ThrowException__When_LengthIsLessThan4() {
+        //given
+        String invalidId = "A10";
         
         //when
         Executable executable = () -> workstation.setId(invalidId);
